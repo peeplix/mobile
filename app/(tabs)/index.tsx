@@ -100,10 +100,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-  },
-  title: {
-    marginTop: 40,
-    fontSize: 20,
-    fontWeight: "bold",
-  },
+  }
 });

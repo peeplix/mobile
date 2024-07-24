@@ -4,11 +4,7 @@ import { Image, Modal, Pressable, ScrollView, StyleSheet } from "react-native";
 import UserInteraction from "./UserInteraction";
 import { useState } from "react";
 
-export default function ListUsers({
-  listUsers,
-}: {
-  listUsers: BasicUser[];
-}) {
+export default function ListUsers({ listUsers }: { listUsers: BasicUser[] }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState(0);
   const onPress = (id: number) => {
@@ -29,7 +25,7 @@ export default function ListUsers({
             style={styles.local}
             onPress={() => onPress(user.id)}
           >
-            <Image style={styles.localImage} source={{uri: user.image}} />
+            <Image style={styles.localImage} source={{ uri: user.image }} />
             <View style={styles.info}>
               <Text style={styles.name} numberOfLines={1}>
                 {user.name}
