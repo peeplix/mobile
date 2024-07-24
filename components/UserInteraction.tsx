@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Text, View } from "./Themed";
 import { Image, StyleSheet } from "react-native";
-import { Local } from "@/app/types/users";
+import { User } from "@/app/types/users";
 
-export default function LocalInteraction({ id }: { id: number }) {
-  const [local, setLocal] = useState({} as Local);
+export default function UserInteraction({ id }: { id: number }) {
+  const [user, setUser] = useState({} as User);
 
   useEffect(() => {
     console.log("LocalInteraction", id);
@@ -18,24 +18,24 @@ export default function LocalInteraction({ id }: { id: number }) {
         name: "Jean Fourest",
         image: "https://picsum.photos/200/300",
         description: "Reste loin de moi, je suis un local !",
-      } as Local;
-      setLocal(data);
+      } as User;
+      setUser(data);
     }
 
     fetchLocal();
   }, [id]);
 
-  return local ? (
+  return user ? (
     <View style={styles.container}>
-      <Image style={styles.localImage} source={{ uri: local.image }} />
+      <Image style={styles.localImage} source={{ uri: user.image }} />
       <View style={styles.bar}></View>
       <View style={styles.info}>
-        <Text style={styles.name}>{local.name}</Text>
-        <Text>{local.description}</Text>
+        <Text style={styles.name}>{user.name}</Text>
+        <Text>{user.description}</Text>
       </View>
     </View>
   ) : (
-    <Text>Loading local details</Text>
+    <Text>Loading user details</Text>
   );
 }
 

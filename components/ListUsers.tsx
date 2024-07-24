@@ -1,20 +1,19 @@
-import { BasicLocal } from "@/app/types/users";
+import { BasicUser } from "@/app/types/users";
 import { Text, View } from "./Themed";
 import { Image, Modal, Pressable, ScrollView, StyleSheet } from "react-native";
-import { useColorScheme } from "@/components/useColorScheme";
-import LocalInteraction from "./LocalInteraction";
+import UserInteraction from "./UserInteraction";
 import { useState } from "react";
 
-export default function ListLocals({
-  listLocals,
+export default function ListUsers({
+  listUsers,
 }: {
-  listLocals: BasicLocal[];
+  listUsers: BasicUser[];
 }) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedLocal, setSelectedLocal] = useState(0);
+  const [selectedUser, setSelectedUser] = useState(0);
   const onPress = (id: number) => {
     console.log("onPress", id);
-    setSelectedLocal(id);
+    setSelectedUser(id);
     setModalVisible(!modalVisible);
   };
 
@@ -23,20 +22,20 @@ export default function ListLocals({
       contentContainerStyle={styles.scrollViewContent}
       overScrollMode="never"
     >
-      {(listLocals &&
-        listLocals.map((local) => (
+      {(listUsers &&
+        listUsers.map((user) => (
           <Pressable
-            key={local.id}
+            key={user.id}
             style={styles.local}
-            onPress={() => onPress(local.id)}
+            onPress={() => onPress(user.id)}
           >
-            <Image style={styles.localImage} source={{uri: local.image}} />
+            <Image style={styles.localImage} source={{uri: user.image}} />
             <View style={styles.info}>
               <Text style={styles.name} numberOfLines={1}>
-                {local.name}
+                {user.name}
               </Text>
               <Text style={styles.description} numberOfLines={5}>
-                {local.description}
+                {user.description}
               </Text>
             </View>
           </Pressable>
@@ -60,7 +59,7 @@ export default function ListLocals({
             <Text style={styles.closeButtonText}>X</Text>
           </Pressable>
         </View>
-        <LocalInteraction id={selectedLocal} />
+        <UserInteraction id={selectedUser} />
       </Modal>
     </ScrollView>
   );

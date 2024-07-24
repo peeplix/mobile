@@ -1,4 +1,4 @@
-export interface Local {
+export interface User {
   id: number;
   name: string;
   address?: string;
@@ -9,7 +9,7 @@ export interface Local {
   image: string | undefined;
 }
 
-export interface BasicLocal {
+export interface BasicUser {
   id: number;
   name: string;
   image: string | undefined;
