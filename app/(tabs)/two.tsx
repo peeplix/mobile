@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import { User } from "../types/users";
 import * as SecureStore from "expo-secure-store";
 import Profile from "@/components/Profile";
+import DeleteAccount from "@/components/DeleteAccount";
 
 export default function TabTwoScreen() {
   const [userInfo, setUserInfo] = useState({} as User);
+  const [token, setToken] = useState("");
 
   async function save(key: any, value: any) {
     await SecureStore.setItemAsync(key, value);
@@ -23,12 +25,22 @@ export default function TabTwoScreen() {
   }
 
   useEffect(() => {
-    const id = getValueFor("token");
+    /* const fetchedToken = getValueFor("token");
+    fetchedToken
+      .then((value) => {
+        if (value) {
+          setToken(value);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      }); */
+    setToken("token");
+
     const fetchUserInfo = async () => {
       /* const response = await fetch(`http://localhost:3000/user/${id}`);
       const data = await response.json(); */
       const data = {
-        id: 1,
         name: "Jean Fourest",
         image: "https://picsum.photos/200/300",
         description: "Reste loin de moi, je suis un local",
@@ -48,6 +60,7 @@ export default function TabTwoScreen() {
     <View style={styles.container}>
       <Text>Profile</Text>
       <Profile user={userInfo} />
+      <DeleteAccount token={token} />
     </View>
   );
 }
