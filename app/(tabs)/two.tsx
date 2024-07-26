@@ -1,4 +1,4 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { View } from "@/components/Themed";
 import { useEffect, useState } from "react";
@@ -58,7 +58,6 @@ export default function TabTwoScreen() {
 
   return (
     <View style={styles.container}>
-      <Text>Profile</Text>
       <Profile user={userInfo} />
       <DeleteAccount token={token} />
     </View>

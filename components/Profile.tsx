@@ -1,29 +1,30 @@
 import { User } from "@/app/types/users";
 import React, { useEffect } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Text, View } from "./Themed";
+import { Image, StyleSheet } from "react-native";
 
 export default function Profile({ user }: { user: User }) {
   useEffect(() => {
     console.log(user);
   }, [user]);
 
-  return (
+  return user ? (
     <View style={styles.container}>
-      {(user && (
-        <View>
-          <Image source={{ uri: user.image }} style={styles.image} />
-          <View style={styles.info}>
-            <Text style={styles.text}>Name: {user.name}</Text>
-            <Text style={styles.text}>Address: {user.address}</Text>
-            <Text style={styles.text}>City: {user.city}</Text>
-            <Text style={styles.text}>Country: {user.country}</Text>
-            <Text style={styles.text}>Phone: {user.phone}</Text>
-            <Text style={styles.text}>Email: {user.email}</Text>
-            <Text style={styles.text}>Description: {user.description}</Text>
-          </View>
+      <View>
+        <Image source={{ uri: user.image }} style={styles.image} />
+        <View style={styles.info}>
+          <Text style={styles.text}>Name: {user.name}</Text>
+          <Text style={styles.text}>Address: {user.address}</Text>
+          <Text style={styles.text}>City: {user.city}</Text>
+          <Text style={styles.text}>Country: {user.country}</Text>
+          <Text style={styles.text}>Phone: {user.phone}</Text>
+          <Text style={styles.text}>Email: {user.email}</Text>
+          <Text style={styles.text}>Description: {user.description}</Text>
         </View>
-      )) || <Text>Loading user profile</Text>}
+      </View>
     </View>
+  ) : (
+    <Text>Loading user profile</Text>
   );
 }
 
@@ -40,7 +41,6 @@ const styles = StyleSheet.create({
     height: "auto",
   },
   text: {
-    fontSize: 20,
-    color: "white",
+    fontSize: 18
   },
 });

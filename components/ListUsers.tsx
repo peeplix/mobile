@@ -2,62 +2,33 @@ import { BasicUser } from "@/app/types/users";
 import { Text, View } from "./Themed";
 import { Image, Modal, Pressable, ScrollView, StyleSheet } from "react-native";
 import UserInteraction from "./UserInteraction";
-import { useState } from "react";
 
 export default function ListUsers({ listUsers }: { listUsers: BasicUser[] }) {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(0);
-  const onPress = (id: number) => {
-    console.log("onPress", id);
-    setSelectedUser(id);
-    setModalVisible(!modalVisible);
+  const onPress = (id: any) => {
+    console.log("Pressing", id);
   };
 
-  return (
+  return listUsers ? (
     <ScrollView
       contentContainerStyle={styles.scrollViewContent}
       overScrollMode="never"
     >
-      {(listUsers &&
-        listUsers.map((user) => (
-          <Pressable
-            key={user.id}
-            style={styles.local}
-            onPress={() => onPress(user.id)}
-          >
-            <Image style={styles.localImage} source={{ uri: user.image }} />
-            <View style={styles.info}>
-              <Text style={styles.name} numberOfLines={1}>
-                {user.name}
-              </Text>
-              <Text style={styles.description} numberOfLines={5}>
-                {user.description}
-              </Text>
-            </View>
-          </Pressable>
-        ))) || <Text>Loading locals in your area</Text>}
-
-      <Modal
-        animationType="none"
-        transparent={false}
-        visible={modalVisible}
-        onRequestClose={() => {
-          console.log("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.modalHeader}>
-          <Text style={styles.modalTitle}>Local Details</Text>
-          <Pressable
-            onPress={() => setModalVisible(false)}
-            style={styles.closeButton}
-          >
-            <Text style={styles.closeButtonText}>X</Text>
-          </Pressable>
-        </View>
-        <UserInteraction id={selectedUser} />
-      </Modal>
+      {listUsers.map((user, index) => (
+        <Pressable key={index} style={styles.local} onPress={() => onPress(user.id)}>
+          <Image style={styles.localImage} source={{ uri: user.image }} />
+          <View style={styles.info}>
+            <Text style={styles.name} numberOfLines={1}>
+              {user.name}
+            </Text>
+            <Text style={styles.description} numberOfLines={5}>
+              {user.description}
+            </Text>
+          </View>
+        </Pressable>
+      ))}
     </ScrollView>
+  ) : (
+    <Text>Loading locals</Text>
   );
 }
 
