@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { BasicUser } from "../types/users";
 import ListUsers from "@/components/ListUsers";
 
-export default function TabOneScreen() {
+export default function index() {
   const [listUsers, setListUsers] = useState([] as BasicUser[]);
 
   useEffect(() => {

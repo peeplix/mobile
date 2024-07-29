@@ -1,35 +1,50 @@
 import { BasicUser } from "@/app/types/users";
-import { Text, View } from "./Themed";
-import { Image, Modal, Pressable, ScrollView, StyleSheet } from "react-native";
-import UserInteraction from "./UserInteraction";
+import { Text, View } from "@/components/Themed";
+import { Image, Pressable, ScrollView, StyleSheet } from "react-native";
+import { useState } from "react";
+import UserDetails from "@/components/UserDetails";
+import { Link } from "expo-router";
 
 export default function ListUsers({ listUsers }: { listUsers: BasicUser[] }) {
+  const [id, setId] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+
   const onPress = (id: any) => {
     console.log("Pressing", id);
+    setId(id);
+    setShowModal(true);
   };
 
-  return listUsers ? (
-    <ScrollView
-      contentContainerStyle={styles.scrollViewContent}
-      overScrollMode="never"
-    >
-      {listUsers.map((user, index) => (
-        <Pressable key={index} style={styles.local} onPress={() => onPress(user.id)}>
-          <Image style={styles.localImage} source={{ uri: user.image }} />
-          <View style={styles.info}>
-            <Text style={styles.name} numberOfLines={1}>
-              {user.name}
-            </Text>
-            <Text style={styles.description} numberOfLines={5}>
-              {user.description}
-            </Text>
-          </View>
-        </Pressable>
-      ))}
-    </ScrollView>
-  ) : (
-    <Text>Loading locals</Text>
-  );
+  if (listUsers && !showModal) {
+    return (
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContent}
+        overScrollMode="never"
+      >
+        {listUsers.map((user, index) => (
+          <Pressable
+            key={index}
+            style={styles.local}
+            onPress={() => onPress(user.id)}
+          >
+            <Image style={styles.localImage} source={{ uri: user.image }} />
+            <View style={styles.info}>
+              <Text style={styles.name} numberOfLines={1}>
+                {user.name}
+              </Text>
+              <Text style={styles.description} numberOfLines={5}>
+                {user.description}
+              </Text>
+            </View>
+          </Pressable>
+        ))}
+      </ScrollView>
+    );
+  } else if (showModal) {
+    return <UserDetails options={{ id, setShowModal, showModal }} />;
+  } else {
+    return <Text>Loading locals</Text>;
+  }
 }
 
 const styles = StyleSheet.create({
