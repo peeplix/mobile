@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import {
   Alert,
-  Button,
-  Image,
   Pressable,
   SafeAreaView,
   StyleSheet,

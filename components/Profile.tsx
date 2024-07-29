@@ -1,29 +1,50 @@
 import { User } from "@/app/types/users";
-import React, { useEffect } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, View } from "@/components/Themed";
+import { Image, StyleSheet } from "react-native";
+import { DarkTheme, DefaultTheme } from "@react-navigation/native";
 
-export default function Profile({ user }: { user: User }) {
+export default function Profile({
+  options: { user },
+}: {
+  options: {
+    user?: User;
+  };
+}) {
+  const [data, setData] = useState({} as User);
+
   useEffect(() => {
-    console.log(user);
+    if (user) {
+      console.log("profile", user);
+      setData({
+        id: 1,
+        name: "Jean Fourest profile lmao",
+        image: "https://picsum.photos/200/300",
+        description: "Reste loin de moi, je suis un local !",
+        address: "123 rue du local",
+        city: "Localville",
+        country: "Localand",
+        email: "localMail",
+        phone: "1234567890",
+      });
+    }
   }, [user]);
 
-  return (
+  return data ? (
     <View style={styles.container}>
-      {(user && (
-        <View>
-          <Image source={{ uri: user.image }} style={styles.image} />
-          <View style={styles.info}>
-            <Text style={styles.text}>Name: {user.name}</Text>
-            <Text style={styles.text}>Address: {user.address}</Text>
-            <Text style={styles.text}>City: {user.city}</Text>
-            <Text style={styles.text}>Country: {user.country}</Text>
-            <Text style={styles.text}>Phone: {user.phone}</Text>
-            <Text style={styles.text}>Email: {user.email}</Text>
-            <Text style={styles.text}>Description: {user.description}</Text>
-          </View>
-        </View>
-      )) || <Text>Loading user profile</Text>}
+      <Image source={{ uri: data.image }} style={styles.image} />
+      <View style={styles.info}>
+        <Text style={styles.text}>Name: {data.name}</Text>
+        <Text style={styles.text}>Address: {data.address}</Text>
+        <Text style={styles.text}>City: {data.city}</Text>
+        <Text style={styles.text}>Country: {data.country}</Text>
+        <Text style={styles.text}>Phone: {data.phone}</Text>
+        <Text style={styles.text}>Email: {data.email}</Text>
+        <Text style={styles.text}>Description: {data.description}</Text>
+      </View>
     </View>
+  ) : (
+    <Text>Loading Profile</Text>
   );
 }
 
@@ -40,7 +61,6 @@ const styles = StyleSheet.create({
     height: "auto",
   },
   text: {
-    fontSize: 20,
-    color: "white",
+    fontSize: 18,
   },
 });

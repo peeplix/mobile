@@ -1,7 +1,6 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
-import { BlurView } from "expo-blur";
 
 import Colors from "@/constants/Colors";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
@@ -30,40 +29,14 @@ export default function TabLayout() {
           title: "Locals Nearby",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerShown: true,
-          headerBackground: () => (
-            <BlurView
-              tint={"dark"}
-              intensity={50}
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-              }}
-            ></BlurView>
-          ),
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="profile"
         options={{
           title: "Profile",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerShown: true,
-          headerBackground: () => (
-            <BlurView
-              tint={"dark"}
-              intensity={50}
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-              }}
-            ></BlurView>
-          ),
         }}
       />
     </Tabs>

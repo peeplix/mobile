@@ -1,27 +1,29 @@
 import { BasicUser } from "@/app/types/users";
-import { Text, View } from "./Themed";
-import { Image, Modal, Pressable, ScrollView, StyleSheet } from "react-native";
-import UserInteraction from "./UserInteraction";
+import { Text, View } from "@/components/Themed";
+import { Image, Pressable, ScrollView, StyleSheet } from "react-native";
 import { useState } from "react";
+import UserDetails from "@/components/UserDetails";
+import { Link } from "expo-router";
 
 export default function ListUsers({ listUsers }: { listUsers: BasicUser[] }) {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(0);
-  const onPress = (id: number) => {
-    console.log("onPress", id);
-    setSelectedUser(id);
-    setModalVisible(!modalVisible);
+  const [id, setId] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+
+  const onPress = (id: any) => {
+    console.log("Pressing", id);
+    setId(id);
+    setShowModal(true);
   };
 
-  return (
-    <ScrollView
-      contentContainerStyle={styles.scrollViewContent}
-      overScrollMode="never"
-    >
-      {(listUsers &&
-        listUsers.map((user) => (
+  if (listUsers && !showModal) {
+    return (
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContent}
+        overScrollMode="never"
+      >
+        {listUsers.map((user, index) => (
           <Pressable
-            key={user.id}
+            key={index}
             style={styles.local}
             onPress={() => onPress(user.id)}
           >
@@ -35,30 +37,14 @@ export default function ListUsers({ listUsers }: { listUsers: BasicUser[] }) {
               </Text>
             </View>
           </Pressable>
-        ))) || <Text>Loading locals in your area</Text>}
-
-      <Modal
-        animationType="none"
-        transparent={false}
-        visible={modalVisible}
-        onRequestClose={() => {
-          console.log("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.modalHeader}>
-          <Text style={styles.modalTitle}>Local Details</Text>
-          <Pressable
-            onPress={() => setModalVisible(false)}
-            style={styles.closeButton}
-          >
-            <Text style={styles.closeButtonText}>X</Text>
-          </Pressable>
-        </View>
-        <UserInteraction id={selectedUser} />
-      </Modal>
-    </ScrollView>
-  );
+        ))}
+      </ScrollView>
+    );
+  } else if (showModal) {
+    return <UserDetails options={{ id, setShowModal, showModal }} />;
+  } else {
+    return <Text>Loading locals</Text>;
+  }
 }
 
 const styles = StyleSheet.create({

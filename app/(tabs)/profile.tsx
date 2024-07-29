@@ -1,13 +1,13 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { View } from "@/components/Themed";
 import { useEffect, useState } from "react";
 import { User } from "../types/users";
 import * as SecureStore from "expo-secure-store";
-import Profile from "@/components/Profile";
 import DeleteAccount from "@/components/DeleteAccount";
+import Profile from "@/components/Profile";
 
-export default function TabTwoScreen() {
+export default function profile() {
   const [userInfo, setUserInfo] = useState({} as User);
   const [token, setToken] = useState("");
 
@@ -58,8 +58,7 @@ export default function TabTwoScreen() {
 
   return (
     <View style={styles.container}>
-      <Text>Profile</Text>
-      <Profile user={userInfo} />
+      <Profile options={{ user: userInfo }} />
       <DeleteAccount token={token} />
     </View>
   );
